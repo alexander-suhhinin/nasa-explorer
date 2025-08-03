@@ -1,4 +1,42 @@
+
 TODO.md – NASA Explorer Project Roadmap
+
+## Backend Layered Architecture (Overview)
+
+The backend is organized into a layered structure to separate responsibilities and simplify testing:
+
+```
+Request → Router → Controller → Service → Utils/Cache → External API (NASA)
+```
+
+### Layers
+
+1. **Routes (`routes/`)**
+   - Defines API endpoints and HTTP methods
+   - Delegates logic to controllers
+   - Can apply route-specific middleware (auth, validation)
+
+2. **Controllers (`controllers/`)**
+   - Receives parsed request and sends response
+   - Handles input validation and error wrapping
+   - Calls corresponding service functions
+
+3. **Services (`services/`)**
+   - Contains core business logic
+   - Handles integration with external APIs (NASA APOD, Mars, NeoWs)
+   - Returns pure data objects without Express dependency
+
+4. **Utils / Cache (`utils/`)**
+   - Shared helpers, caching (NodeCache / Redis)
+   - Logging or retry utilities
+
+---
+
+### Advantages of this approach
+- **Separation of concerns** – each layer has a single responsibility
+- **Testability** – services and controllers can be tested independently
+- **Scalability** – easy to add new API routes and features
+- **Clean express setup** – routes remain small, controllers hold logic, services remain framework-agnostic
 
 Phase 0 — Инициализация проекта (Day 0)
 	•	Создать монорепу nasa-explorer с frontend/ и backend/
@@ -119,23 +157,23 @@ Phase 6 — Polish & Submission (Day 13-14)
 Цель: реализовать базовый backend с API к NASA и кэшированием, готовый для интеграции с frontend.
 
 ### 1. Setup & Structure
-- [ ] Создать базовую структуру backend (Node.js + Express)
-- [ ] Настроить ESLint/Prettier и базовую конфигурацию проекта
-- [ ] Добавить `GET /health` endpoint
+- [x] Создать базовую структуру backend (Node.js + Express)
+- [x] Настроить ESLint/Prettier и базовую конфигурацию проекта
+- [x] Добавить `GET /health` endpoint
 
 ### 2. NASA API Proxy Endpoints
-- [ ] `GET /api/apod` — возвращает Astronomy Picture of the Day
-- [ ] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
-- [ ] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
+- [x] `GET /api/apod` — возвращает Astronomy Picture of the Day
+- [x] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
+- [x] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
 
 ### 3. Caching & Performance
-- [ ] Добавить in-memory cache (TTL 5 min)
+- [x] Добавить in-memory cache (TTL 5 min)
 - [ ] Опционально подготовить Redis-клиент для будущего использования (установить ioredis или redis npm, добавить config, протестировать подключение в dev и через docker-compose)
-- [ ] Обработать таймауты и ошибки NASA API (retry/fallback)
+- [x] Обработать таймауты и ошибки NASA API (retry/fallback)
 
 ### 4. Testing
-- [ ] Настроить Jest + Supertest
-- [ ] Добавить тесты для `/health` и базовых API маршрутов
+- [x] Настроить Jest + Supertest
+- [x] Добавить тесты для `/health` и базовых API маршрутов
 - [ ] Настроить CI/CD прогон тестов через GitHub Actions
 
 ### 5. Integration & Documentation
