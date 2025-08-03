@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../infra/docker/Dockerfile.backend
+      target: prod
+    container_name: nasa-backend-prod
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NASA_API_KEY: ${NASA_API_KEY}
+    ports:
+      - "5000:5000"
+    networks:
+      - nasa_network
+
+  frontend:
+    build:
+      context: ../infra/ngnix
+      dockerfile: Dockerfile
+    container_name: nasa-frontend-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - nasa_network
+
+  redis:
+    image: redis:6
+    container_name: nasa-redis-prod
+    restart: unless-stopped
+    networks:
+      - nasa_network
+
+networks:
+  nasa_network:
+    driver: bridge

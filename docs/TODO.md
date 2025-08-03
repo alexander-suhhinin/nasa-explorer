@@ -82,3 +82,32 @@ Phase 6 — Polish & Submission (Day 13-14)
 	•	SSR для фронтенда (Next.js)
 	•	Темная/светлая тема
 	•	PWA + оффлайн-режим
+
+⸻
+
+## Phase 0.5 — Post infra-setup merge plan
+
+После слияния ветки `infra-setup` в `main` основной фокус смещается на реализацию функционала:
+
+### Backend Priorities
+- [ ] Реализовать базовые маршруты:
+  - `GET /api/apod` — Astronomy Picture of the Day
+  - `GET /api/mars` — Mars Rover Photos
+  - `GET /api/neows` — Near Earth Objects
+- [ ] Добавить базовое кэширование (in-memory, TTL 5 min)
+- [ ] Обработать ошибки и таймауты при обращении к NASA API
+- [ ] Подключить Jest + Supertest для юнит и интеграционных тестов
+
+### Frontend Priorities
+- [ ] Создать минимальный каркас приложения на React + Vite
+- [ ] Реализовать страницу `Gallery` с APOD и пагинацией
+- [ ] Подключить сервис `services/api.ts` для запросов к backend
+- [ ] Добавить базовую обработку загрузки и ошибок
+- [ ] Подключить Vitest + React Testing Library для тестов
+
+### Integration
+- [ ] Связать frontend и backend через Docker Compose dev
+- [ ] Обновить `README.md` с инструкциями по запуску dev-стека
+- [ ] Настроить GitHub Actions для прогонки тестов при PR
+
+После успешной реализации этих задач можно переходить к **Phase 1 и 2** основной дорожной карты (MVP backend и frontend).
