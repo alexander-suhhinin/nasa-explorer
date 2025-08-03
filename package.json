@@ -11,9 +11,20 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:frontend": "npm run dev --workspace=frontend",
     "dev:backend": "npm run dev --workspace=backend",
+
     "build": "npm run build --workspaces",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:backend": "npm run build --workspace=backend",
+
     "test": "npm run test --workspaces",
+    "test:frontend": "npm run test --workspace=frontend",
+    "test:backend": "npm run test --workspace=backend",
+
     "lint": "npm run lint --workspaces",
+
+    "docker:dev": "docker-compose up --build",
+    "docker:prod": "docker-compose -f infra/docker-compose.prod.yml up -d --build",
+
     "install:all": "npm install"
   },
   "devDependencies": {
