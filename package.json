@@ -1,0 +1,32 @@
+{
+  "name": "nasa-explorer",
+  "version": "1.0.0",
+  "description": "NASA Explorer - приложение для изучения космических данных NASA",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "nasa",
+    "space",
+    "explorer",
+    "react",
+    "nodejs",
+    "api"
+  ],
+  "author": "NASA Explorer Team",
+  "license": "MIT"
+}
