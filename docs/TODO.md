@@ -111,3 +111,37 @@ Phase 6 — Polish & Submission (Day 13-14)
 - [ ] Настроить GitHub Actions для прогонки тестов при PR
 
 После успешной реализации этих задач можно переходить к **Phase 1 и 2** основной дорожной карты (MVP backend и frontend).
+
+⸻
+
+## Backend MVP Checklist (Phase 1)
+
+Цель: реализовать базовый backend с API к NASA и кэшированием, готовый для интеграции с frontend.
+
+### 1. Setup & Structure
+- [ ] Создать базовую структуру backend (Node.js + Express)
+- [ ] Настроить ESLint/Prettier и базовую конфигурацию проекта
+- [ ] Добавить `GET /health` endpoint
+
+### 2. NASA API Proxy Endpoints
+- [ ] `GET /api/apod` — возвращает Astronomy Picture of the Day
+- [ ] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
+- [ ] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
+
+### 3. Caching & Performance
+- [ ] Добавить in-memory cache (TTL 5 min)
+- [ ] Опционально подготовить Redis-клиент для будущего использования
+- [ ] Обработать таймауты и ошибки NASA API (retry/fallback)
+
+### 4. Testing
+- [ ] Настроить Jest + Supertest
+- [ ] Добавить тесты для `/health` и базовых API маршрутов
+- [ ] Настроить CI/CD прогон тестов через GitHub Actions
+
+### 5. Integration & Documentation
+- [ ] Проверить работу с Docker Compose dev
+- [ ] Обновить README.md с инструкциями запуска backend
+- [ ] Зафиксировать API контракты для frontend (описание JSON ответа)
+
+После выполнения этого чеклиста backend будет готов для интеграции с фронтендом и дальнейшей реализации WOW-фич.
+
