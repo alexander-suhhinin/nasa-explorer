@@ -90,4 +90,53 @@ NASA Explorer consists of the following components:
 
 ---
 
+
 *This architecture demonstrates production-level engineering practices for a coding challenge project.*
+
+---
+
+## 6. Project Phases Overview
+
+The project development is organized into **five main phases**, each with clear checklists for structured progress:
+
+1. **Phase 0.5 – Post infra-setup merge**
+   - Initial backend & frontend skeleton
+   - Docker Compose dev setup
+   - CI/CD basic validation
+
+2. **Phase 1 – Backend MVP**
+   - Core API endpoints (`/api/apod`, `/api/mars`, `/api/neows`)
+   - In-memory caching and error handling
+   - Jest + Supertest testing and CI integration
+
+3. **Phase 2 – Frontend MVP**
+   - React + Vite SPA with APOD gallery and Mars Rover page
+   - API service integration and error handling
+   - Vitest + React Testing Library unit tests
+
+4. **Phase 3 – WOW Feature & Interactivity**
+   - 3D visualization with React Three Fiber
+   - User interactivity: filters, favorites, animations
+   - Performance optimization and UX polish
+
+5. **Phase 4 – Engineering Excellence**
+   - Production-ready Docker & `docker-compose.prod.yml`
+   - GitHub Actions CI/CD with auto-deploy
+   - Monitoring, logging, and security best practices
+
+6. **Phase 5 – Polish & Handover**
+   - Final QA and responsive testing
+   - Updated documentation with screenshots and demo video
+   - Project ready for presentation, submission, or handover
+
+---
+
+### Visual Summary of Phases
+
+```
+Phase 0.5 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5
+Infra setup   Backend     Frontend    WOW & 3D    Prod Ready  Final Polish
+              MVP         MVP         Features    & CI/CD     & Handover
+```
+
+This phased approach ensures the project evolves from infrastructure setup to a production-ready MVP with a clear wow factor and professional handover.
