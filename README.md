@@ -1,5 +1,3 @@
-
-
 # 🚀 NASA Explorer
 
 **Fullstack web application to explore NASA Open APIs**
@@ -117,6 +115,108 @@ docker-compose up --build
 
 Frontend: http://localhost:3000
 Backend: http://localhost:5000
+
+---
+
+### 🔹 Run in Dev Mode with Docker Compose
+
+This project includes a development Docker Compose setup that runs **backend** and **frontend** with hot reload.
+
+#### 1. Configure environment variables
+
+Create `.env` files:
+
+**backend/.env**
+```
+NASA_API_KEY=DEMO_KEY
+PORT=8000
+```
+
+**frontend/.env** *(optional for Vite env variables)*
+```
+VITE_API_URL=http://localhost:8000
+```
+
+#### 2. Start Docker Compose in dev mode
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+- **Backend:** http://localhost:8000/health
+- **Frontend:** http://localhost:3000/
+
+Any code changes in `backend/` or `frontend/` will trigger automatic hot reload inside the containers.
+
+#### 3. Stop containers
+
+Press `Ctrl+C` and run:
+
+```bash
+docker-compose -f docker-compose.dev.yml down
+```
+
+---
+
+### 📡 API Endpoints & Response Contracts
+
+The backend exposes three main endpoints for the frontend:
+
+#### 1. `GET /api/apod`
+Returns Astronomy Picture of the Day.
+
+**Sample Response:**
+```json
+{
+  "date": "2025-08-01",
+  "title": "The Milky Way over the Desert",
+  "url": "https://apod.nasa.gov/apod/image/2508/MilkyWayDesert.jpg",
+  "explanation": "A beautiful Milky Way panorama captured over the desert sky...",
+  "media_type": "image"
+}
+```
+
+#### 2. `GET /api/mars`
+Returns an array of Mars Rover photos. Supports query parameters:
+- `sol` (Martian day)
+- `earth_date` (YYYY-MM-DD)
+- `camera` (optional camera filter)
+
+**Sample Response:**
+```json
+[
+  {
+    "id": 102693,
+    "sol": 1000,
+    "img_src": "http://mars.nasa.gov/msl-raw-images/image1.jpg",
+    "earth_date": "2015-05-30",
+    "camera": "Front Hazard Avoidance Camera",
+    "rover": "Curiosity"
+  }
+]
+```
+
+#### 3. `GET /api/neows`
+Returns an array of near-Earth objects (NEO). Supports query parameters:
+- `start_date` (YYYY-MM-DD)
+- `end_date` (YYYY-MM-DD)
+
+**Sample Response:**
+```json
+[
+  {
+    "id": "3542519",
+    "name": "2004 XZ130",
+    "nasa_jpl_url": "http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=3542519",
+    "absolute_magnitude_h": 20.5,
+    "is_potentially_hazardous_asteroid": false,
+    "estimated_diameter_m": 250.3,
+    "close_approach_date": "2025-08-01",
+    "relative_velocity_kph": "38000",
+    "miss_distance_km": "745000"
+  }
+]
+```
 
 ---
 

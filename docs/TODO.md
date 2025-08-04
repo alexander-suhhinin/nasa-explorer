@@ -1,4 +1,42 @@
+
 TODO.md – NASA Explorer Project Roadmap
+
+## Backend Layered Architecture (Overview)
+
+The backend is organized into a layered structure to separate responsibilities and simplify testing:
+
+```
+Request → Router → Controller → Service → Utils/Cache → External API (NASA)
+```
+
+### Layers
+
+1. **Routes (`routes/`)**
+   - Defines API endpoints and HTTP methods
+   - Delegates logic to controllers
+   - Can apply route-specific middleware (auth, validation)
+
+2. **Controllers (`controllers/`)**
+   - Receives parsed request and sends response
+   - Handles input validation and error wrapping
+   - Calls corresponding service functions
+
+3. **Services (`services/`)**
+   - Contains core business logic
+   - Handles integration with external APIs (NASA APOD, Mars, NeoWs)
+   - Returns pure data objects without Express dependency
+
+4. **Utils / Cache (`utils/`)**
+   - Shared helpers, caching (NodeCache / Redis)
+   - Logging or retry utilities
+
+---
+
+### Advantages of this approach
+- **Separation of concerns** – each layer has a single responsibility
+- **Testability** – services and controllers can be tested independently
+- **Scalability** – easy to add new API routes and features
+- **Clean express setup** – routes remain small, controllers hold logic, services remain framework-agnostic
 
 Phase 0 — Инициализация проекта (Day 0)
 	•	Создать монорепу nasa-explorer с frontend/ и backend/
@@ -119,27 +157,27 @@ Phase 6 — Polish & Submission (Day 13-14)
 Цель: реализовать базовый backend с API к NASA и кэшированием, готовый для интеграции с frontend.
 
 ### 1. Setup & Structure
-- [ ] Создать базовую структуру backend (Node.js + Express)
-- [ ] Настроить ESLint/Prettier и базовую конфигурацию проекта
-- [ ] Добавить `GET /health` endpoint
+- [x] Создать базовую структуру backend (Node.js + Express)
+- [x] Настроить ESLint/Prettier и базовую конфигурацию проекта
+- [x] Добавить `GET /health` endpoint
 
 ### 2. NASA API Proxy Endpoints
-- [ ] `GET /api/apod` — возвращает Astronomy Picture of the Day
-- [ ] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
-- [ ] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
+- [x] `GET /api/apod` — возвращает Astronomy Picture of the Day
+- [x] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
+- [x] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
 
 ### 3. Caching & Performance
-- [ ] Добавить in-memory cache (TTL 5 min)
+- [x] Добавить in-memory cache (TTL 5 min)
 - [ ] Опционально подготовить Redis-клиент для будущего использования (установить ioredis или redis npm, добавить config, протестировать подключение в dev и через docker-compose)
-- [ ] Обработать таймауты и ошибки NASA API (retry/fallback)
+- [x] Обработать таймауты и ошибки NASA API (retry/fallback)
 
 ### 4. Testing
-- [ ] Настроить Jest + Supertest
-- [ ] Добавить тесты для `/health` и базовых API маршрутов
+- [x] Настроить Jest + Supertest
+- [x] Добавить тесты для `/health` и базовых API маршрутов
 - [ ] Настроить CI/CD прогон тестов через GitHub Actions
 
 ### 5. Integration & Documentation
-- [ ] Проверить работу с Docker Compose dev
+- [x] Проверить работу с Docker Compose dev
 - [ ] Обновить README.md с инструкциями запуска backend
 - [ ] Зафиксировать API контракты для frontend (описание JSON ответа)
 
@@ -152,35 +190,33 @@ Phase 6 — Polish & Submission (Day 13-14)
 Цель: реализовать базовый frontend на React + Vite, интегрированный с backend, готовый для добавления WOW-фич.
 
 ### 1. Setup & Structure
-- [ ] Создать базовую структуру фронтенда на React + Vite
-- [ ] Настроить ESLint/Prettier, добавить базовую конфигурацию проекта
-- [ ] Подключить TailwindCSS или MUI для быстрой верстки
+- [x] Создать базовую структуру фронтенда на React + Vite
+- [x] Настроить ESLint/Prettier, добавить базовую конфигурацию проекта
+- [x] Подключить TailwindCSS для быстрой верстки
 
 ### 2. Core Pages & Components
-- [ ] Реализовать страницу `Home` с описанием проекта
-- [ ] Реализовать страницу `Gallery` с APOD и пагинацией
-- [ ] Реализовать страницу `Mars Rover` с фильтрами по sol и камере
-- [ ] Создать переиспользуемые компоненты (Card, Loader, ErrorBanner)
-- [ ] Добавить Skeleton Loading и обработку ошибок
+- [x] Реализовать страницу `Home` / `Dashboard` с карточками APOD, Mars, NeoWs
+- [x] Реализовать страницу `Gallery` (APOD) с отображением фото/видео и описанием
+- [x] Реализовать страницу `Mars Rover` с фильтром по sol
+- [x] Реализовать страницу `NeoWs` с таблицей, сортировкой и пагинацией
+- [x] Создать переиспользуемые компоненты (Card, Layout, Sidebar, Topbar)
+- [x] Добавить Skeleton Loading и обработку ошибок (с алертами внутри Card)
+    - [x] Skeleton loading и корректные алерты ошибок реализованы для APOD, Mars, NeoWs
 
 ### 3. API Integration
-- [ ] Создать сервис `services/api.ts` для работы с backend
-- [ ] Подключить `VITE_API_BASE_URL` из `.env`
-- [ ] Интегрировать галерею APOD и Mars Rover с backend
-- [ ] Реализовать базовую обработку сетевых ошибок и retry при необходимости
+- [x] Создать сервис `services/api.ts` для работы с backend
+- [x] Подключить `VITE_API_BASE_URL` из `.env`
+- [x] Интегрировать галереи APOD, Mars Rover, NeoWs с backend
+- [x] Реализовать базовую обработку сетевых ошибок и retry при необходимости
+    - [x] Для NeoWs установлен `retry: 0` для улучшения UX при ошибках (см. services/api.ts)
 
-### 4. Testing
-- [ ] Настроить Vitest + React Testing Library
-- [ ] Написать unit-тесты для компонентов (Card, Loader)
-- [ ] Добавить e2e-тесты для основных страниц (опционально Playwright)
-- [ ] Подключить CI/CD прогон тестов при PR
+### 4. Dashboard & Future Features
+- [x] Реализован дашборд с карточками трех галерей
+- [x] Добавлена скрытая кнопка "Register for more" для будущей авторизации
+- [x] NASA в Sidebar теперь ссылается на Dashboard
+- [x] Выровнены линии Topbar/Sidebar для pixel-perfect вида
 
-### 5. Integration & Documentation
-- [ ] Проверить работу фронтенда через Docker Compose dev
-- [ ] Обновить README.md с инструкциями запуска фронтенда
-- [ ] Зафиксировать список API и примерные JSON-ответы для интеграции
-
-После выполнения этого чеклиста frontend будет готов к интеграции WOW-фич (3D-карты и интерактивности).
+---
 
 ⸻
 
