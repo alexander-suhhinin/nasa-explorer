@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -20,6 +21,7 @@ export default function Dashboard() {
     { title: 'Astronomy Picture of the Day', desc: 'Explore daily astronomy images with explanations from NASA.', to: '/apod' },
     { title: 'Mars Rover Photos', desc: "Browse photos captured by NASA's rovers on the Red Planet.", to: '/mars' },
     { title: 'Near-Earth Objects (NeoWs)', desc: 'Track near-Earth asteroids and check which are potentially hazardous.', to: '/neows' },
+    { title: 'NeoWs 3D Visualization', desc: 'Interactive 3D view of near-Earth asteroids orbiting our planet.', to: '/3d-neows' },
   ];
 
   return (

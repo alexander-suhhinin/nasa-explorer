@@ -31,6 +31,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
           <a href="/apod" className="hover:text-blue-600 transition-colors">APOD</a>
           <a href="/mars" className="hover:text-blue-600 transition-colors">Mars Rover</a>
           <a href="/neows" className="hover:text-blue-600 transition-colors">NeoWs</a>
+          <a href="/3d-neows" className="hover:text-blue-600 transition-colors">NeoWs-3D</a>
         </nav>
       </div>
 

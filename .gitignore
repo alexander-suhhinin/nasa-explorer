@@ -140,3 +140,7 @@ vite.config.ts.timestamp-*
 
 # editor settings
 .history/
+
+
+# Mac index files
+.DS_Store
