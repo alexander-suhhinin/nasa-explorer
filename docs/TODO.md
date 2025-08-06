@@ -215,6 +215,17 @@ Phase 6 — Polish & Submission (Day 13-14)
 - [x] Добавлена скрытая кнопка "Register for more" для будущей авторизации
 - [x] NASA в Sidebar теперь ссылается на Dashboard
 - [x] Выровнены линии Topbar/Sidebar для pixel-perfect вида
+- [x] Добавлены hover-анимации карточек Dashboard и выравнивание по высоте
+- [x] Fade-in анимация для Dashboard через Framer Motion
+
+### 5. Interactivity & UX Polish
+- [x] Lightbox с кастомным хуком `useLightbox` интегрирован в APOD
+- [ ] Lightbox интегрировать в Mars Rover (план)
+- [x] Fade-in анимация для APOD
+- [x] Fade-in анимация для Mars Rover
+- [x] Fade-in анимация для NeoWs
+- [x] Skeleton Loading + error alerts для всех галерей
+- [x] Анимации Skeleton (планируется добавить shimmer эффект)
 
 ---
 

@@ -1,11 +1,6 @@
 import axios from 'axios';
-import { fetchWithRetryAndCache } from '../utils/fetchWithRetry';
-
-const NASA_API_KEY = process.env['NASA_API_KEY'] || 'DEMO_KEY';
-
-const NASA_APOD_URL = 'https://api.nasa.gov/planetary/apod';
-const NASA_MARS_URL = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
-const NASA_NEOWS_URL = 'https://api.nasa.gov/neo/rest/v1/feed';
+import { createCache } from '../cache/CacheFactory';
+import config from '../config';
 
 interface MarsQuery {
   sol?: number;
@@ -18,43 +13,53 @@ interface NeoWsQuery {
   end_date?: string;
 }
 
+const cache = createCache();
+
+
+async function fetchData(url: string, additionalParams?: Record<string, any>) {
+  const params = { api_key: config.nasaApiKey, ...additionalParams };
+  return axios.get(url, { params });
+}
 /**
- * Fetches Astronomy Picture of the Day from NASA API with caching and retry
+ * Fetches Astronomy Picture of the Day from NASA API with caching
  */
 export async function fetchApod() {
   const cacheKey = 'apod_data';
-  const params = { api_key: NASA_API_KEY };
+  const cached = await cache.get<any>(cacheKey);
+  if (cached) return cached;
 
-  const data = await fetchWithRetryAndCache<any>(NASA_APOD_URL, params, cacheKey);
+  const { data } = await fetchData(config.nasaApodUrl)
 
-  return {
+  const result = {
     date: data.date,
     title: data.title,
     url: data.url,
     explanation: data.explanation,
     media_type: data.media_type,
   };
+
+  await cache.set(cacheKey, result, config.defaultTtl);
+  return result;
 }
 
 /**
- * Fetches Mars Rover photos from NASA API with caching and retry
+ * Fetches Mars Rover photos from NASA API with caching
  */
 export async function fetchMarsPhotos(query: MarsQuery) {
   const { sol, earth_date, camera } = query;
 
-  const params: Record<string, string | number> = {
-    api_key: NASA_API_KEY,
-  };
+  const params: Record<string, string | number> = {};
 
   if (sol !== undefined) params['sol'] = sol;
   if (earth_date !== undefined) params['earth_date'] = earth_date;
   if (camera !== undefined) params['camera'] = camera;
 
   const cacheKey = `mars_${sol || earth_date || 'latest'}_${camera || 'all'}`;
+  const cached = await cache.get<any[]>(cacheKey);
+  if (cached) return cached;
 
-  const data = await fetchWithRetryAndCache<any>(NASA_MARS_URL, params, cacheKey);
-
-  return data.photos.map((photo: any) => ({
+  const { data } = await fetchData(config.nasaMarsUrl, params)
+  const result = data.photos.map((photo: any) => ({
     id: photo.id,
     sol: photo.sol,
     img_src: photo.img_src,
@@ -62,25 +67,28 @@ export async function fetchMarsPhotos(query: MarsQuery) {
     camera: photo.camera.full_name,
     rover: photo.rover.name,
   }));
+
+  await cache.set(cacheKey, result, config.defaultTtl);
+  return result;
 }
 
 /**
- * Fetches Near-Earth Objects (NeoWs) data from NASA API with caching and retry
+ * Fetches Near-Earth Objects (NeoWs) data from NASA API with caching
  */
 export async function fetchNeoWs(query: NeoWsQuery) {
   const { start_date, end_date } = query;
 
-  const params: Record<string, string> = {
-    api_key: NASA_API_KEY,
-  };
+  const params: Record<string, string> = {};
+
   if (start_date) params['start_date'] = start_date;
   if (end_date) params['end_date'] = end_date;
 
   const cacheKey = `neows_${start_date || 'default'}_${end_date || 'today'}`;
+  const cached = await cache.get<any[]>(cacheKey);
+  if (cached) return cached;
 
-  const data = await fetchWithRetryAndCache<any>(NASA_NEOWS_URL, params, cacheKey);
+  const { data } = await fetchData(config.nasaNeoWsUrl, params)
 
-  // Flatten and simplify the near_earth_objects structure
   const nearEarthObjects = data.near_earth_objects;
   const simplified: any[] = [];
 
@@ -101,5 +109,6 @@ export async function fetchNeoWs(query: NeoWsQuery) {
     });
   });
 
+  await cache.set(cacheKey, simplified, config.defaultTtl);
   return simplified;
 }

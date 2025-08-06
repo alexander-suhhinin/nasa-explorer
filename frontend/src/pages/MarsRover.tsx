@@ -3,9 +3,13 @@ import { getMarsPhotos } from '../services/api';
 import { useState } from 'react';
 import type { MarsPhoto } from '../services/api';
 import Card, { SkeletonCard } from '../components/Card';
+import Lightbox from '../components/Lightbox';
+import { useLightbox } from '../hooks/useLightbox';
+import { motion } from 'framer-motion';
 
 export default function MarsRover() {
   const [sol, setSol] = useState<number>(1000);
+  const lightbox = useLightbox();
 
   const { data, isLoading, isError } = useQuery<MarsPhoto[]>({
     queryKey: ['mars', sol],
@@ -28,6 +32,11 @@ export default function MarsRover() {
   }
 
   return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
     <Card className="max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Mars Rover Photos (Sol {sol})</h1>
       <div className="mb-4 flex gap-2 items-center">
@@ -60,5 +69,12 @@ export default function MarsRover() {
         </div>
       )}
     </Card>
+    <Lightbox
+        isOpen={lightbox.isOpen}
+        src={lightbox.src}
+        alt={lightbox.alt}
+        onClose={lightbox.closeLightbox}
+      />
+    </motion.div>
   );
 }
