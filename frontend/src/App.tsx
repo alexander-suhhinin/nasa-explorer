@@ -6,13 +6,15 @@ import './App.css';
 import NeoWs from './pages/NeoWs';
 import Dashboard from './pages/Dashboard';
 import NeoWs3D from './pages/NeoWs3D';
+import Home from './pages/Home';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Home />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="apod" element={<ApodGallery />} />
           <Route path="mars" element={<MarsRover />} />
           <Route path="neows" element={<NeoWs />} />
