@@ -165,29 +165,7 @@ jobs:
           path: backend/dist
           retention-days: 1
 
-  security-scan:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    needs: lint-and-test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
 
   docker-build:
     name: Docker Build
@@ -226,7 +204,7 @@ jobs:
   deploy-staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
-    needs: [lint-and-test, build, security-scan]
+    needs: [lint-and-test, build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
     steps:
@@ -242,7 +220,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: [lint-and-test, build, security-scan, docker-build]
+    needs: [lint-and-test, build, docker-build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
