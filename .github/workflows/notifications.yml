@@ -1,0 +1,77 @@
+name: Notifications
+
+on:
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types:
+      - completed
+
+jobs:
+  notify-slack:
+    name: Notify Slack
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+
+    steps:
+      - name: Notify Slack on workflow completion
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+               --data '{
+                 "channel": "#deployments",
+                 "text": "🚀 NASA Explorer Deployment Status\n\n**Workflow:** ${{ github.event.workflow_run.name }}\n**Status:** ${{ github.event.workflow_run.conclusion }}\n**Branch:** ${{ github.event.workflow_run.head_branch }}\n**Commit:** ${{ github.event.workflow_run.head_sha }}\n**Triggered by:** ${{ github.event.workflow_run.actor.login }}\n\n<${{ github.event.workflow_run.html_url }}|View Details>"
+               }' \
+               ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  notify-email:
+    name: Notify Email
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "NASA Explorer Deployment Failed"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: "NASA Explorer CI/CD"
+          body: |
+            Deployment failed for NASA Explorer project.
+
+            Workflow: ${{ github.event.workflow_run.name }}
+            Branch: ${{ github.event.workflow_run.head_branch }}
+            Commit: ${{ github.event.workflow_run.head_sha }}
+            Triggered by: ${{ github.event.workflow_run.actor.login }}
+
+            View details: ${{ github.event.workflow_run.html_url }}
+
+  notify-teams:
+    name: Notify Microsoft Teams
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+
+    steps:
+      - name: Notify Teams
+        run: |
+          curl -H "Content-Type: application/json" \
+               -d '{
+                 "title": "NASA Explorer Deployment",
+                 "text": "Workflow **${{ github.event.workflow_run.name }}** completed with status: **${{ github.event.workflow_run.conclusion }}**",
+                 "themeColor": "${{ github.event.workflow_run.conclusion == 'success' && '00ff00' || 'ff0000' }}",
+                 "potentialAction": [
+                   {
+                     "@type": "OpenUri",
+                     "name": "View Details",
+                     "targets": [
+                       {
+                         "os": "default",
+                         "uri": "${{ github.event.workflow_run.html_url }}"
+                       }
+                     ]
+                   }
+                 ]
+               }' \
+               ${{ secrets.TEAMS_WEBHOOK_URL }}

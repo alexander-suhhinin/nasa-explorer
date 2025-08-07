@@ -53,7 +53,11 @@ export default function MarsRover() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {data.map((photo) => (
-            <div key={photo.id} className="border rounded shadow hover:shadow-lg transition bg-white">
+            <div
+              key={photo.id}
+              className="border rounded shadow hover:shadow-lg transition bg-white cursor-pointer"
+              onClick={() => lightbox.openLightbox(photo.img_src, `Sol ${photo.sol} - ${photo.camera}`)}
+            >
               <img
                 src={photo.img_src}
                 alt={`Sol ${photo.sol}`}

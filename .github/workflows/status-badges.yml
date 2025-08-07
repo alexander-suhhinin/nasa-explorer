@@ -1,0 +1,44 @@
+name: Update Status Badges
+
+on:
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types:
+      - completed
+
+jobs:
+  update-readme:
+    name: Update README Badges
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update README badges
+        run: |
+          # Get workflow status
+          WORKFLOW_STATUS="${{ github.event.workflow_run.conclusion }}"
+
+          # Update README.md with current status
+          if [ "$WORKFLOW_STATUS" = "success" ]; then
+            BADGE_COLOR="green"
+            BADGE_TEXT="passing"
+          else
+            BADGE_COLOR="red"
+            BADGE_TEXT="failing"
+          fi
+
+          # Create badge URL
+          BADGE_URL="https://img.shields.io/badge/CI%2FCD-$BADGE_TEXT-$BADGE_COLOR?style=flat-square&logo=github-actions"
+
+          # Update README.md
+          sed -i "s|https://img.shields.io/badge/CI%2FCD-.*|$BADGE_URL|g" README.md
+
+          # Commit and push changes
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update CI/CD status badge" || echo "No changes to commit"
+          git push

@@ -42,6 +42,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/supertest": "^6.0.3",
+    "object-hash": "^3.0.0",
     "supertest": "^7.1.4"
   }
 }

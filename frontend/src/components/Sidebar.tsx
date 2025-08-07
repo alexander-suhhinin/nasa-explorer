@@ -1,6 +1,6 @@
 // frontend/src/components/Sidebar.tsx
 import { Link, useLocation } from 'react-router-dom';
-import { HomeIcon, CameraIcon, TableCellsIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, CameraIcon, TableCellsIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   const location = useLocation();
@@ -9,6 +9,7 @@ export default function Sidebar() {
     { to: '/apod', label: 'APOD', icon: HomeIcon },
     { to: '/mars', label: 'Mars Rover', icon: CameraIcon },
     { to: '/neows', label: 'NeoWs', icon: TableCellsIcon },
+    { to: '/3d-neows', label: 'NeoWs 3D', icon: GlobeAltIcon },
   ];
 
   return (
@@ -18,7 +19,11 @@ export default function Sidebar() {
         to="/"
         className="h-16 flex items-center px-6 border-b text-xl font-bold hover:text-blue-600 transition-colors"
       >
-        NASA
+          <img
+            src="/logo/nasa-logo.svg"
+            alt="NASA Logo"
+            className="h-10 w-auto"
+          />
       </Link>
 
       {/* Navigation */}

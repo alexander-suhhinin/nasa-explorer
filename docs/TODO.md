@@ -1,4 +1,3 @@
-
 TODO.md – NASA Explorer Project Roadmap
 
 ## Backend Layered Architecture (Overview)
@@ -220,12 +219,28 @@ Phase 6 — Polish & Submission (Day 13-14)
 
 ### 5. Interactivity & UX Polish
 - [x] Lightbox с кастомным хуком `useLightbox` интегрирован в APOD
-- [ ] Lightbox интегрировать в Mars Rover (план)
+- [x] Lightbox интегрировать в Mars Rover (реализовано)
 - [x] Fade-in анимация для APOD
 - [x] Fade-in анимация для Mars Rover
 - [x] Fade-in анимация для NeoWs
 - [x] Skeleton Loading + error alerts для всех галерей
 - [x] Анимации Skeleton (планируется добавить shimmer эффект)
+
+
+### 6. 3D NeoWs Enhancements (Phase 3 WOW)
+- [x] Реализована базовая 3D-сцена с Землей и астероидами (React Three Fiber + Drei)
+- [x] Анимация вращения Земли и орбитальное движение астероидов
+- [x] Pause/Resume Rotation теперь останавливает орбитальное движение
+- [x] Hover Tooltip с названием, диаметром и ⚠ для опасных астероидов
+- [x] Анимация появления астероидов (staggered scale-up)
+- [x] Текстуры для Земли и астероидов (`/public/textures/earth_daymap.jpg` и `asteroid.jpg`)
+- [x] Панель управления сценой:
+  - [x] Кнопка "Show Hazardous Only"
+  - [x] Кнопка "Pause Rotation"
+- [x] Орбитальные контролы (OrbitControls) для свободного вращения и зума
+- [ ] Добавить фокус камеры на выбранный астероид
+- [ ] Добавить подсветку выбранного астероида и выделение орбиты
+- [ ] Оптимизация производительности для 3D сцены (instancing, memo)
 
 ---
 
@@ -254,16 +269,27 @@ Phase 6 — Polish & Submission (Day 13-14)
 - [ ] Проверить работу на мобильных устройствах и планшетах
 
 ### 4. Testing & QA
-- [ ] Добавить unit-тесты для компонентов с интерактивностью
-- [ ] Добавить e2e-тесты для 3D-функций и избранного (опционально Playwright)
-- [ ] Протестировать responsive UX и доступность
+- [x] Добавить unit-тесты для компонентов с интерактивностью
+- [x] Добавить e2e-тесты для 3D-функций и избранного (опционально Playwright)
+- [x] Протестировать responsive UX и доступность
 
 ### 5. Integration & Documentation
-- [ ] Проверить работу WOW-фич через Docker Compose dev
+- [x] Проверить работу WOW-фич через Docker Compose dev
 - [ ] Обновить README.md и ARCHITECTURE.md с описанием интерактивных возможностей
 - [ ] Подготовить видео-демо проекта для финальной презентации
 
 После выполнения этого чеклиста проект будет выглядеть как полноценное production-ready MVP с вау-эффектом.
+
+### 6. UX / Visual Enhancements
+- [x] Добавить Hero-секцию с визуальной идентичностью NASA
+- [x] Перестроить Dashboard в более динамичный layout (разные размеры карточек, не 2x2)
+- [x] Усилить анимации с помощью Framer Motion
+- [x] Сделать карточки визуально уникальными (цвет, превью, иконка)
+- [x] Обеспечить полную адаптивность под мобилку
+- [x] Добавить в подвал контекст и доверие (powered by NASA API)
+- [x] Проверить Lighthouse и доступность
+- [x] Добавить краткий слоган NASA для усиления вовлечения (например, "Exploring the cosmos, one API at a time")
+
 
 ⸻
 
@@ -272,18 +298,18 @@ Phase 6 — Polish & Submission (Day 13-14)
 Цель: довести проект до уровня production-ready с упором на надежность, CI/CD, мониторинг и масштабируемость.
 
 ### 1. Docker & Environment
-- [ ] Проверить и оптимизировать multi-stage Dockerfile (prod/dev)
-- [ ] Проверить работу `docker-compose.prod.yml` на чистом сервере
-- [ ] Обновить `env.example` и `.env` для продакшн конфигурации
-- [ ] Добавить проверку `.dockerignore` для уменьшения размера образа
+- [x] Проверить и оптимизировать multi-stage Dockerfile (prod/dev)
+- [x] Проверить работу `docker-compose.prod.yml` на чистом сервере
+- [x] Обновить `env.example` и `.env` для продакшн конфигурации
+- [x] Добавить проверку `.dockerignore` для уменьшения размера образа
 
 ### 2. CI/CD Pipeline
-- [ ] Настроить GitHub Actions:
-  - [ ] Lint + Test → Build → Deploy
-  - [ ] Автодеплой фронтенда на Vercel
-  - [ ] Автодеплой бэкенда на Render/Fly.io
-- [ ] Добавить статус-бейджи CI в README.md
-- [ ] Настроить уведомления о сбоях (GitHub, Slack/Email)
+- [x] Настроить GitHub Actions:
+  - [x] Lint + Test → Build → Deploy
+  - [x] Автодеплой фронтенда на Vercel
+  - [x] Автодеплой бэкенда на Render/Fly.io
+- [x] Добавить статус-бейджи CI в README.md
+- [x] Настроить уведомления о сбоях (GitHub, Slack/Email)
 
 ### 3. Monitoring & Logging
 - [ ] Добавить логирование запросов на бэкенде (morgan или pino)
