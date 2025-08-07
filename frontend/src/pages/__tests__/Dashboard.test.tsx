@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect} from 'vitest';
 import Dashboard from '../Dashboard';
 
 const renderWithRouter = (component: React.ReactElement) => {
@@ -67,9 +67,6 @@ describe('Dashboard', () => {
 
   it('should have correct navigation links for each card', () => {
     renderWithRouter(<Dashboard />);
-
-    // Find all links by looking for Link components
-    const links = screen.getAllByRole('link');
 
     // Find the specific links by looking for the "Explore" buttons within each card
     const apodCard = screen.getByText('Astronomy Picture of the Day').closest('[data-testid="card"]');
