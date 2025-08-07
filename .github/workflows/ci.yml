@@ -227,23 +227,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy frontend to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./frontend
-          vercel-args: '--prod'
+      # - name: Deploy frontend to Vercel
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     working-directory: ./frontend
+      #     vercel-args: '--prod'
 
-      - name: Deploy backend to Render
-        env:
-          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
-          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
-        run: |
-          echo "Deploying backend to Render..."
-          # Add your Render deployment logic here
-          # Example: Trigger Render deployment via API
+      # - name: Deploy backend to Render
+      #   env:
+      #     RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+      #     RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+      #   run: |
+      #     echo "Deploying backend to Render..."
+      #     # Add your Render deployment logic here
+      #     # Example: Trigger Render deployment via API
 
       - name: Notify deployment success
         if: success()
