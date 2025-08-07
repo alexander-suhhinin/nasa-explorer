@@ -270,8 +270,8 @@ Phase 6 — Polish & Submission (Day 13-14)
 
 ### 4. Testing & QA
 - [x] Добавить unit-тесты для компонентов с интерактивностью
-- [ ] Добавить e2e-тесты для 3D-функций и избранного (опционально Playwright)
-- [ ] Протестировать responsive UX и доступность
+- [x] Добавить e2e-тесты для 3D-функций и избранного (опционально Playwright)
+- [x] Протестировать responsive UX и доступность
 
 ### 5. Integration & Documentation
 - [ ] Проверить работу WOW-фич через Docker Compose dev
