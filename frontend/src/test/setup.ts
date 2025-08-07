@@ -2,11 +2,6 @@ import '@testing-library/jest-dom';
 import { vi } from 'vitest';
 import React from 'react';
 
-// Mock CSS imports to prevent PostCSS processing during tests
-vi.mock('*.css', () => ({}));
-vi.mock('*.scss', () => ({}));
-vi.mock('*.sass', () => ({}));
-
 // Mock IntersectionObserver
 global.IntersectionObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
