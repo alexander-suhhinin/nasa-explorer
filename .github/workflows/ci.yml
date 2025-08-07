@@ -52,18 +52,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install root dependencies
+      - name: Install dependencies
         run: npm ci
-
-      - name: Install backend dependencies
-        run: |
-          cd backend
-          npm ci
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          npm ci
 
       - name: Run backend linting
         run: |
@@ -128,18 +118,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install root dependencies
+      - name: Install dependencies
         run: npm ci
-
-      - name: Install backend dependencies
-        run: |
-          cd backend
-          npm ci
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          npm ci
 
       - name: Build backend
         run: |
