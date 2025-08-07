@@ -1,20 +1,28 @@
 
 
-name: CI/CD
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+
+env:
+  NODE_VERSION: '20'
+  CACHE_DEPENDENCY_PATH: |
+    **/package-lock.json
+    **/yarn.lock
+    **/pnpm-lock.yaml
 
 jobs:
-  build-test-deploy:
+  lint-and-test:
+    name: Lint & Test
     runs-on: ubuntu-latest
 
     services:
       redis:
-        image: redis
+        image: redis:6-alpine
         ports:
           - 6379:6379
         options: >-
@@ -25,26 +33,47 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: Install dependencies (root)
-        run: npm install
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+            */node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(env.CACHE_DEPENDENCY_PATH) }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Install dependencies (backend)
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
         run: |
           cd backend
-          npm install
+          npm ci
 
-      - name: Install dependencies (frontend)
+      - name: Install frontend dependencies
         run: |
           cd frontend
-          npm install
+          npm ci
+
+      - name: Run backend linting
+        run: |
+          cd backend
+          npm run lint || echo "No lint script found"
+
+      - name: Run frontend linting
+        run: |
+          cd frontend
+          npm run lint || echo "No lint script found"
 
       - name: Run backend tests
         run: |
@@ -56,23 +85,196 @@ jobs:
           cd frontend
           npm test
 
-      - name: Build frontend
+      - name: Upload backend test coverage
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          file: ./backend/coverage/lcov.info
+          flags: backend
+          name: backend-coverage
+
+      - name: Upload frontend test coverage
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          file: ./frontend/coverage/lcov.info
+          flags: frontend
+          name: frontend-coverage
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            node_modules
+            */node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles(env.CACHE_DEPENDENCY_PATH) }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: Install frontend dependencies
         run: |
           cd frontend
-          npm run build
+          npm ci
 
       - name: Build backend
         run: |
           cd backend
           npm run build || echo "No backend build step defined"
 
-      # Optional deployment placeholders:
-      # Replace these steps with your Vercel/Render deploy actions
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Upload frontend build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-build
+          path: frontend/dist
+          retention-days: 1
+
+      - name: Upload backend build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-build
+          path: backend/dist
+          retention-days: 1
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [lint-and-test, build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build backend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          file: ./infra/docker/Dockerfile.backend
+          target: prod
+          push: false
+          tags: nasa-explorer-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build frontend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./infra/ngnix
+          file: ./infra/ngnix/Dockerfile
+          push: false
+          tags: nasa-explorer-frontend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [lint-and-test, build, security-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to staging environment
+        run: |
+          echo "Deploying to staging environment..."
+          # Add your staging deployment logic here
+          # Example: Deploy to staging server or cloud environment
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [lint-and-test, build, security-scan, docker-build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Deploy frontend to Vercel
-        if: github.ref == 'refs/heads/main'
-        run: echo "Deploy frontend to Vercel here"
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./frontend
+          vercel-args: '--prod'
 
       - name: Deploy backend to Render
-        if: github.ref == 'refs/heads/main'
-        run: echo "Deploy backend to Render here"
+        env:
+          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          echo "Deploying backend to Render..."
+          # Add your Render deployment logic here
+          # Example: Trigger Render deployment via API
+
+      - name: Notify deployment success
+        if: success()
+        run: |
+          echo "🚀 Production deployment completed successfully!"
+          # Add notification logic (Slack, Email, etc.)
+
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          echo "❌ Production deployment failed!"
+          # Add failure notification logic

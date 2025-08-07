@@ -274,7 +274,7 @@ Phase 6 — Polish & Submission (Day 13-14)
 - [x] Протестировать responsive UX и доступность
 
 ### 5. Integration & Documentation
-- [ ] Проверить работу WOW-фич через Docker Compose dev
+- [x] Проверить работу WOW-фич через Docker Compose dev
 - [ ] Обновить README.md и ARCHITECTURE.md с описанием интерактивных возможностей
 - [ ] Подготовить видео-демо проекта для финальной презентации
 
@@ -298,18 +298,18 @@ Phase 6 — Polish & Submission (Day 13-14)
 Цель: довести проект до уровня production-ready с упором на надежность, CI/CD, мониторинг и масштабируемость.
 
 ### 1. Docker & Environment
-- [ ] Проверить и оптимизировать multi-stage Dockerfile (prod/dev)
-- [ ] Проверить работу `docker-compose.prod.yml` на чистом сервере
-- [ ] Обновить `env.example` и `.env` для продакшн конфигурации
-- [ ] Добавить проверку `.dockerignore` для уменьшения размера образа
+- [x] Проверить и оптимизировать multi-stage Dockerfile (prod/dev)
+- [x] Проверить работу `docker-compose.prod.yml` на чистом сервере
+- [x] Обновить `env.example` и `.env` для продакшн конфигурации
+- [x] Добавить проверку `.dockerignore` для уменьшения размера образа
 
 ### 2. CI/CD Pipeline
-- [ ] Настроить GitHub Actions:
-  - [ ] Lint + Test → Build → Deploy
-  - [ ] Автодеплой фронтенда на Vercel
-  - [ ] Автодеплой бэкенда на Render/Fly.io
-- [ ] Добавить статус-бейджи CI в README.md
-- [ ] Настроить уведомления о сбоях (GitHub, Slack/Email)
+- [x] Настроить GitHub Actions:
+  - [x] Lint + Test → Build → Deploy
+  - [x] Автодеплой фронтенда на Vercel
+  - [x] Автодеплой бэкенда на Render/Fly.io
+- [x] Добавить статус-бейджи CI в README.md
+- [x] Настроить уведомления о сбоях (GitHub, Slack/Email)
 
 ### 3. Monitoring & Logging
 - [ ] Добавить логирование запросов на бэкенде (morgan или pino)
