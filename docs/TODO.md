@@ -37,210 +37,210 @@ Request → Router → Controller → Service → Utils/Cache → External API (
 - **Scalability** – easy to add new API routes and features
 - **Clean express setup** – routes remain small, controllers hold logic, services remain framework-agnostic
 
-Phase 0 — Инициализация проекта (Day 0)
-	•	Создать монорепу nasa-explorer с frontend/ и backend/
-	•	Настроить npm workspaces или отдельные package.json для фронта и бэка
-	•	Добавить .editorconfig, .gitignore, Prettier/ESLint
-	•	Настроить commitlint + Husky (опционально для инжен. зрелости)
+Phase 0 — Project Initialization (Day 0)
+	•	Create nasa-explorer monorepo with frontend/ and backend/
+	•	Configure npm workspaces or separate package.json for frontend and backend
+	•	Add .editorconfig, .gitignore, Prettier/ESLint
+	•	Configure commitlint + Husky (optional for engineering maturity)
 
 ⸻
 
 Phase 1 — Backend MVP (Day 1-2)
-	•	Создать backend/ на Node.js + Express
-	•	Добавить GET /health endpoint
-	•	Реализовать NASA API proxy:
+	•	Create backend/ with Node.js + Express
+	•	Add GET /health endpoint
+	•	Implement NASA API proxy:
 	•	/api/apod – Astronomy Picture of the Day
 	•	/api/mars – Mars Rover Photos
 	•	/api/neows – Near Earth Objects
-	•	Добавить базовое кэширование (in-memory, TTL 5 min)
-	•	Настроить CORS для фронтенда
-	•	Подключить Jest + Supertest для юнит-тестов
+	•	Add basic caching (in-memory, TTL 5 min)
+	•	Configure CORS for frontend
+	•	Set up Jest + Supertest for unit tests
 
 ⸻
 
 Phase 2 — Frontend MVP (Day 2-4)
-	•	Создать frontend/ на React + Vite
-	•	Настроить Tailwind или MUI для быстрого UI
-	•	Реализовать страницы:
-	•	Home: приветствие и описание проекта
-	•	Gallery: APOD с пагинацией и датами
-	•	Mars Rover: галерея + фильтры по Sol и камере
-	•	Создать сервис для запросов к backend (services/api.ts)
-	•	Добавить Skeleton Loading и Error Handling
-	•	Добавить Vitest + React Testing Library
+	•	Create frontend/ with React + Vite
+	•	Configure Tailwind or MUI for rapid UI development
+	•	Implement pages:
+	•	Home: welcome and project description
+	•	Gallery: APOD with pagination and dates
+	•	Mars Rover: gallery + filters by Sol and camera
+	•	Create service for backend requests (services/api.ts)
+	•	Add Skeleton Loading and Error Handling
+	•	Add Vitest + React Testing Library
 
 ⸻
 
 Phase 3 — WOW Feature & Interactivity (Day 5-7)
-	•	Добавить 3D-визуализацию (React Three Fiber + Drei)
-	•	Земля/Марс
-	•	Астероиды из NeoWs с орбитами
-	•	Hover/click → карточка с данными (размер, дата сближения)
-	•	Реализовать поиск и фильтры для изображений
-	•	Добавить избранное (LocalStorage)
-	•	Анимации появления карточек (Framer Motion)
+	•	Add 3D visualization (React Three Fiber + Drei)
+	•	Earth/Mars
+	•	Asteroids from NeoWs with orbits
+	•	Hover/click → data card (size, approach date)
+	•	Implement search and filters for images
+	•	Add favorites (LocalStorage)
+	•	Card appearance animations (Framer Motion)
 
 ⸻
 
 Phase 4 — Engineering Excellence (Day 8-10)
-	•	Настроить Docker для backend и frontend
+	•	Configure Docker for backend and frontend
 	•	Multi-stage Dockerfile (prod + dev)
-	•	docker-compose для локальной разработки
-	•	Настроить GitHub Actions:
+	•	docker-compose for local development
+	•	Configure GitHub Actions:
 	•	Lint + Test → Build
-	•	Deploy backend на Render/Fly.io
-	•	Deploy frontend на Vercel
-	•	Обновить README.md с инструкциями запуска и деплоя
+	•	Deploy backend to Render/Fly.io
+	•	Deploy frontend to Vercel
+	•	Update README.md with launch and deployment instructions
 
 ⸻
 
-Phase 5 — Документация и Roadmap (Day 11-12)
-	•	Создать docs/
-	•	README.md — быстрое развертывание
-	•	ARCHITECTURE.md — схема фронт/бэк + NASA API
-	•	ROADMAP.md — будущее развитие:
-	•	Авторизация (OAuth NASA)
+Phase 5 — Documentation and Roadmap (Day 11-12)
+	•	Create docs/
+	•	README.md — quick deployment
+	•	ARCHITECTURE.md — frontend/backend schema + NASA API
+	•	ROADMAP.md — future development:
+	•	Authorization (OAuth NASA)
 	•	PWA
-	•	ML-анализ астероидов
-	•	Записать видео-демо работы проекта (опционально, сильно повышает впечатление)
+	•	ML analysis of asteroids
+	•	Record a video demo of the project (optional, greatly enhances impression)
 
 ⸻
 
 Phase 6 — Polish & Submission (Day 13-14)
-	•	Финальный код-ревью
-	•	Прогон всех тестов и деплоя
-	•	Проверка responsive design на мобилке
-	•	Отправка ссылок на деплой и GitHub
+	•	Final code review
+	•	Run all tests and deployment
+	•	Check responsive design on mobile
+	•	Submit links to deployment and GitHub
 
 ⸻
 
-💡 Бонусы, если останется время:
-	•	Использовать Redis вместо in-memory кэша
-	•	SSR для фронтенда (Next.js)
-	•	Темная/светлая тема
-	•	PWA + оффлайн-режим
+💡 Bonuses, if time permits:
+	•	Use Redis instead of in-memory cache
+	•	SSR for frontend (Next.js)
+	•	Dark/light theme
+	•	PWA + offline mode
 
 ⸻
 
 ## Phase 0.5 — Post infra-setup merge plan
 
-После слияния ветки `infra-setup` в `main` основной фокус смещается на реализацию функционала:
+After merging the `infra-setup` branch into `main`, the main focus shifts to implementing functionality:
 
 ### Backend Priorities
-- [ ] Реализовать базовые маршруты:
+- [ ] Implement basic routes:
   - `GET /api/apod` — Astronomy Picture of the Day
   - `GET /api/mars` — Mars Rover Photos
   - `GET /api/neows` — Near Earth Objects
-- [ ] Добавить базовое кэширование (in-memory, TTL 5 min)
-- [ ] Обработать ошибки и таймауты при обращении к NASA API
-- [ ] Подключить Jest + Supertest для юнит и интеграционных тестов
+- [ ] Add basic caching (in-memory, TTL 5 min)
+- [ ] Handle errors and timeouts when accessing NASA API
+- [ ] Set up Jest + Supertest for unit and integration tests
 
 ### Frontend Priorities
-- [ ] Создать минимальный каркас приложения на React + Vite
-- [ ] Реализовать страницу `Gallery` с APOD и пагинацией
-- [ ] Подключить сервис `services/api.ts` для запросов к backend
-- [ ] Добавить базовую обработку загрузки и ошибок
-- [ ] Подключить Vitest + React Testing Library для тестов
+- [ ] Create minimal application framework with React + Vite
+- [ ] Implement `Gallery` page with APOD and pagination
+- [ ] Connect `services/api.ts` service for backend requests
+- [ ] Add basic loading and error handling
+- [ ] Set up Vitest + React Testing Library for tests
 
 ### Integration
-- [ ] Связать frontend и backend через Docker Compose dev
-- [ ] Обновить `README.md` с инструкциями по запуску dev-стека
-- [ ] Настроить GitHub Actions для прогонки тестов при PR
+- [ ] Connect frontend and backend through Docker Compose dev
+- [ ] Update `README.md` with instructions for launching dev stack
+- [ ] Configure GitHub Actions to run tests on PR
 
-После успешной реализации этих задач можно переходить к **Phase 1 и 2** основной дорожной карты (MVP backend и frontend).
+After successful implementation of these tasks, we can move on to **Phase 1 and 2** of the main roadmap (MVP backend and frontend).
 
 ⸻
 
 ## Backend MVP Checklist (Phase 1)
 
-Цель: реализовать базовый backend с API к NASA и кэшированием, готовый для интеграции с frontend.
+Goal: implement a basic backend with NASA API and caching, ready for integration with the frontend.
 
 ### 1. Setup & Structure
-- [x] Создать базовую структуру backend (Node.js + Express)
-- [x] Настроить ESLint/Prettier и базовую конфигурацию проекта
-- [x] Добавить `GET /health` endpoint
+- [x] Create basic backend structure (Node.js + Express)
+- [x] Configure ESLint/Prettier and basic project configuration
+- [x] Add `GET /health` endpoint
 
 ### 2. NASA API Proxy Endpoints
-- [x] `GET /api/apod` — возвращает Astronomy Picture of the Day
-- [x] `GET /api/mars` — возвращает Mars Rover Photos (параметры sol/earth_date/camera)
-- [x] `GET /api/neows` — возвращает Near Earth Objects (с поддержкой фильтров по дате)
+- [x] `GET /api/apod` — returns Astronomy Picture of the Day
+- [x] `GET /api/mars` — returns Mars Rover Photos (parameters sol/earth_date/camera)
+- [x] `GET /api/neows` — returns Near Earth Objects (with support for date filters)
 
 ### 3. Caching & Performance
-- [x] Добавить in-memory cache (TTL 5 min)
-- [ ] Опционально подготовить Redis-клиент для будущего использования (установить ioredis или redis npm, добавить config, протестировать подключение в dev и через docker-compose)
-- [x] Обработать таймауты и ошибки NASA API (retry/fallback)
+- [x] Add in-memory cache (TTL 5 min)
+- [ ] Optionally prepare Redis client for future use (install ioredis or redis npm, add config, test connection in dev and through docker-compose)
+- [x] Handle timeouts and NASA API errors (retry/fallback)
 
 ### 4. Testing
-- [x] Настроить Jest + Supertest
-- [x] Добавить тесты для `/health` и базовых API маршрутов
-- [ ] Настроить CI/CD прогон тестов через GitHub Actions
+- [x] Set up Jest + Supertest
+- [x] Add tests for `/health` and basic API routes
+- [ ] Configure CI/CD test runs through GitHub Actions
 
 ### 5. Integration & Documentation
-- [x] Проверить работу с Docker Compose dev
-- [ ] Обновить README.md с инструкциями запуска backend
-- [ ] Зафиксировать API контракты для frontend (описание JSON ответа)
+- [x] Test functionality with Docker Compose dev
+- [ ] Update README.md with backend launch instructions
+- [ ] Document API contracts for frontend (JSON response description)
 
-После выполнения этого чеклиста backend будет готов для интеграции с фронтендом и дальнейшей реализации WOW-фич.
+After completing this checklist, the backend will be ready for integration with the frontend and further implementation of WOW features.
 
 ⸻
 
 ## Frontend MVP Checklist (Phase 2)
 
-Цель: реализовать базовый frontend на React + Vite, интегрированный с backend, готовый для добавления WOW-фич.
+Goal: implement a basic frontend on React + Vite, integrated with the backend, ready for adding WOW features.
 
 ### 1. Setup & Structure
-- [x] Создать базовую структуру фронтенда на React + Vite
-- [x] Настроить ESLint/Prettier, добавить базовую конфигурацию проекта
-- [x] Подключить TailwindCSS для быстрой верстки
+- [x] Create basic frontend structure with React + Vite
+- [x] Configure ESLint/Prettier, add basic project configuration
+- [x] Connect TailwindCSS for rapid layout development
 
 ### 2. Core Pages & Components
-- [x] Реализовать страницу `Home` / `Dashboard` с карточками APOD, Mars, NeoWs
-- [x] Реализовать страницу `Gallery` (APOD) с отображением фото/видео и описанием
-- [x] Реализовать страницу `Mars Rover` с фильтром по sol
-- [x] Реализовать страницу `NeoWs` с таблицей, сортировкой и пагинацией
-- [x] Создать переиспользуемые компоненты (Card, Layout, Sidebar, Topbar)
-- [x] Добавить Skeleton Loading и обработку ошибок (с алертами внутри Card)
-    - [x] Skeleton loading и корректные алерты ошибок реализованы для APOD, Mars, NeoWs
+- [x] Implement `Home` / `Dashboard` page with APOD, Mars, NeoWs cards
+- [x] Implement `Gallery` (APOD) page with photo/video display and description
+- [x] Implement `Mars Rover` page with sol filter
+- [x] Implement `NeoWs` page with table, sorting and pagination
+- [x] Create reusable components (Card, Layout, Sidebar, Topbar)
+- [x] Add Skeleton Loading and error handling (with alerts inside Card)
+    - [x] Skeleton loading and correct error alerts implemented for APOD, Mars, NeoWs
 
 ### 3. API Integration
-- [x] Создать сервис `services/api.ts` для работы с backend
-- [x] Подключить `VITE_API_BASE_URL` из `.env`
-- [x] Интегрировать галереи APOD, Mars Rover, NeoWs с backend
-- [x] Реализовать базовую обработку сетевых ошибок и retry при необходимости
-    - [x] Для NeoWs установлен `retry: 0` для улучшения UX при ошибках (см. services/api.ts)
+- [x] Create `services/api.ts` service for working with backend
+- [x] Connect `VITE_API_BASE_URL` from `.env`
+- [x] Integrate APOD, Mars Rover, NeoWs galleries with backend
+- [x] Implement basic network error handling and retry when necessary
+    - [x] For NeoWs, `retry: 0` is set to improve UX during errors (see services/api.ts)
 
 ### 4. Dashboard & Future Features
-- [x] Реализован дашборд с карточками трех галерей
-- [x] Добавлена скрытая кнопка "Register for more" для будущей авторизации
-- [x] NASA в Sidebar теперь ссылается на Dashboard
-- [x] Выровнены линии Topbar/Sidebar для pixel-perfect вида
-- [x] Добавлены hover-анимации карточек Dashboard и выравнивание по высоте
-- [x] Fade-in анимация для Dashboard через Framer Motion
+- [x] Dashboard with three gallery cards implemented
+- [x] Hidden "Register for more" button added for future authorization
+- [x] NASA in Sidebar now links to Dashboard
+- [x] Topbar/Sidebar lines aligned for pixel-perfect view
+- [x] Hover animations for Dashboard cards and height alignment added
+- [x] Fade-in animation for Dashboard via Framer Motion
 
 ### 5. Interactivity & UX Polish
-- [x] Lightbox с кастомным хуком `useLightbox` интегрирован в APOD
-- [x] Lightbox интегрировать в Mars Rover (реализовано)
-- [x] Fade-in анимация для APOD
-- [x] Fade-in анимация для Mars Rover
-- [x] Fade-in анимация для NeoWs
-- [x] Skeleton Loading + error alerts для всех галерей
-- [x] Анимации Skeleton (планируется добавить shimmer эффект)
+- [x] Lightbox with custom `useLightbox` hook integrated into APOD
+- [x] Lightbox integrated into Mars Rover (implemented)
+- [x] Fade-in animation for APOD
+- [x] Fade-in animation for Mars Rover
+- [x] Fade-in animation for NeoWs
+- [x] Skeleton Loading + error alerts for all galleries
+- [x] Skeleton animations (shimmer effect planned to be added)
 
 
 ### 6. 3D NeoWs Enhancements (Phase 3 WOW)
-- [x] Реализована базовая 3D-сцена с Землей и астероидами (React Three Fiber + Drei)
-- [x] Анимация вращения Земли и орбитальное движение астероидов
-- [x] Pause/Resume Rotation теперь останавливает орбитальное движение
-- [x] Hover Tooltip с названием, диаметром и ⚠ для опасных астероидов
-- [x] Анимация появления астероидов (staggered scale-up)
-- [x] Текстуры для Земли и астероидов (`/public/textures/earth_daymap.jpg` и `asteroid.jpg`)
-- [x] Панель управления сценой:
-  - [x] Кнопка "Show Hazardous Only"
-  - [x] Кнопка "Pause Rotation"
-- [x] Орбитальные контролы (OrbitControls) для свободного вращения и зума
-- [ ] Добавить фокус камеры на выбранный астероид
-- [ ] Добавить подсветку выбранного астероида и выделение орбиты
-- [ ] Оптимизация производительности для 3D сцены (instancing, memo)
+- [x] Basic 3D scene with Earth and asteroids implemented (React Three Fiber + Drei)
+- [x] Earth rotation animation and orbital movement of asteroids
+- [x] Pause/Resume Rotation now stops orbital movement
+- [x] Hover Tooltip with name, diameter and ⚠ for hazardous asteroids
+- [x] Asteroid appearance animation (staggered scale-up)
+- [x] Textures for Earth and asteroids (`/public/textures/earth_daymap.jpg` and `asteroid.jpg`)
+- [x] Scene control panel:
+  - [x] "Show Hazardous Only" button
+  - [x] "Pause Rotation" button
+- [x] Orbital controls (OrbitControls) for free rotation and zoom
+- [ ] Add camera focus on selected asteroid
+- [ ] Add highlighting for selected asteroid and orbit emphasis
+- [ ] Performance optimization for 3D scene (instancing, memo)
 
 ---
 
@@ -248,60 +248,60 @@ Phase 6 — Polish & Submission (Day 13-14)
 
 ## WOW Feature & Interactivity Checklist (Phase 3)
 
-Цель: добавить визуальный вау-эффект, интерактивность и функциональность, делающую проект уникальным.
+Goal: add visual wow-effect, interactivity and functionality that makes the project unique.
 
 ### 1. 3D Visualization
-- [ ] Подключить React Three Fiber + Drei
-- [ ] Создать 3D-сцену с Землей и Марсом
-- [ ] Отобразить астероиды из NeoWs как объекты на орбите
-- [ ] Реализовать hover/click → карточка с данными (размер, скорость, дата сближения)
-- [ ] Настроить камеру и освещение для максимальной наглядности
+- [ ] Connect React Three Fiber + Drei
+- [ ] Create 3D scene with Earth and Mars
+- [ ] Display asteroids from NeoWs as objects in orbit
+- [ ] Implement hover/click → data card (size, velocity, approach date)
+- [ ] Configure camera and lighting for maximum clarity
 
 ### 2. User Interactivity
-- [ ] Добавить поиск и фильтры для изображений и объектов
-- [ ] Реализовать избранное с сохранением в LocalStorage
-- [ ] Добавить анимации появления карточек и элементов интерфейса (Framer Motion)
-- [ ] Опционально: drag/rotate для 3D-модели и зум камеры
+- [ ] Add search and filters for images and objects
+- [ ] Implement favorites with saving to LocalStorage
+- [ ] Add appearance animations for cards and interface elements (Framer Motion)
+- [ ] Optional: drag/rotate for 3D model and camera zoom
 
 ### 3. Performance & UX
-- [ ] Настроить lazy loading и динамическую подгрузку 3D-моделей
-- [ ] Оптимизировать производительность React Three Fiber
-- [ ] Проверить работу на мобильных устройствах и планшетах
+- [ ] Configure lazy loading and dynamic loading of 3D models
+- [ ] Optimize React Three Fiber performance
+- [ ] Test functionality on mobile devices and tablets
 
 ### 4. Testing & QA
-- [x] Добавить unit-тесты для компонентов с интерактивностью
-- [x] Добавить e2e-тесты для 3D-функций и избранного (опционально Playwright)
-- [x] Протестировать responsive UX и доступность
+- [x] Add unit tests for components with interactivity
+- [x] Add e2e tests for 3D functions and favorites (optionally Playwright)
+- [x] Test responsive UX and accessibility
 
 ### 5. Integration & Documentation
-- [x] Проверить работу WOW-фич через Docker Compose dev
-- [ ] Обновить README.md и ARCHITECTURE.md с описанием интерактивных возможностей
-- [ ] Подготовить видео-демо проекта для финальной презентации
+- [x] Test WOW features through Docker Compose dev
+- [ ] Update README.md and ARCHITECTURE.md with description of interactive features
+- [ ] Prepare video demo of the project for final presentation
 
-После выполнения этого чеклиста проект будет выглядеть как полноценное production-ready MVP с вау-эффектом.
+After completing this checklist, the project will look like a full-fledged production-ready MVP with a wow-effect.
 
 ### 6. UX / Visual Enhancements
-- [x] Добавить Hero-секцию с визуальной идентичностью NASA
-- [x] Перестроить Dashboard в более динамичный layout (разные размеры карточек, не 2x2)
-- [x] Усилить анимации с помощью Framer Motion
-- [x] Сделать карточки визуально уникальными (цвет, превью, иконка)
-- [x] Обеспечить полную адаптивность под мобилку
-- [x] Добавить в подвал контекст и доверие (powered by NASA API)
-- [x] Проверить Lighthouse и доступность
-- [x] Добавить краткий слоган NASA для усиления вовлечения (например, "Exploring the cosmos, one API at a time")
+- [x] Add Hero section with NASA visual identity
+- [x] Rebuild Dashboard into a more dynamic layout (different card sizes, not 2x2)
+- [x] Enhance animations with Framer Motion
+- [x] Make cards visually unique (color, preview, icon)
+- [x] Ensure full mobile responsiveness
+- [x] Add context and trust to footer (powered by NASA API)
+- [x] Check Lighthouse and accessibility
+- [x] Add a short NASA slogan to enhance engagement (for example, "Exploring the cosmos, one API at a time")
 
 
 ⸻
 
 ## Engineering Excellence Checklist (Phase 4)
 
-Цель: довести проект до уровня production-ready с упором на надежность, CI/CD, мониторинг и масштабируемость.
+Goal: bring the project to production-ready level with emphasis on reliability, CI/CD, monitoring and scalability.
 
 ### 1. Docker & Environment
-- [x] Проверить и оптимизировать multi-stage Dockerfile (prod/dev)
-- [x] Проверить работу `docker-compose.prod.yml` на чистом сервере
-- [x] Обновить `env.example` и `.env` для продакшн конфигурации
-- [x] Добавить проверку `.dockerignore` для уменьшения размера образа
+- [x] Check and optimize multi-stage Dockerfile (prod/dev)
+- [x] Test `docker-compose.prod.yml` on a clean server
+- [x] Update `env.example` and `.env` for production configuration
+- [x] Add `.dockerignore` check to reduce image size
 
 ### 2. CI/CD Pipeline
 - [x] Настроить GitHub Actions:
