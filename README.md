@@ -320,6 +320,7 @@ npm run build
 For detailed deployment setup instructions, see:
 - [Render Deployment Setup](docs/RENDER_DEPLOYMENT_SETUP.md)
 - [GitHub Actions Setup](docs/GITHUB_ACTIONS_SETUP.md)
+- [Vercel Routing Fix](docs/VERCEL_ROUTING_FIX.md)
 
 ### Environment Variables
 
