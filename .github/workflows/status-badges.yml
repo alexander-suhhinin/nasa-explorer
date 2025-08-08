@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+# Permissions needed to update README badges
+permissions:
+  contents: write
+
 jobs:
   update-readme:
     name: Update README Badges
