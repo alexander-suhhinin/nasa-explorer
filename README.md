@@ -293,13 +293,49 @@ npm run test:e2e
 
 ## 🚀 Deployment
 
-- **Frontend** → Vercel (`npm run build` in `frontend/`)
-- **Backend** → Render / Fly.io (Dockerfile in `backend/`)
+### Automated Deployment
 
-GitHub Actions workflow:
-1. Lint + Tests
-2. Build
-3. Deploy (frontend → Vercel, backend → Render)
+The project uses GitHub Actions for automated deployment:
+
+- **Frontend** → Vercel (automatic on push to `main`)
+- **Backend** → Render (automatic on push to `main`)
+
+### Manual Deployment
+
+**Frontend (Vercel):**
+```bash
+cd frontend
+npm run build
+# Deploy to Vercel via dashboard or CLI
+```
+
+**Backend (Render):**
+```bash
+# Build command: npm run build:backend:render
+# Start command: cd backend; npm run start
+```
+
+### Setup Instructions
+
+For detailed deployment setup instructions, see:
+- [Render Deployment Setup](docs/RENDER_DEPLOYMENT_SETUP.md)
+- [GitHub Actions Setup](docs/GITHUB_ACTIONS_SETUP.md)
+
+### Environment Variables
+
+**Required for Backend:**
+- `NASA_API_KEY` - Your NASA API key (or leave empty for DEMO_KEY)
+- `PORT` - Automatically set by Render
+
+**Optional:**
+- `CACHE_TTL` - Cache time-to-live in seconds (default: 300)
+- `NODE_ENV` - Set to `production`
+
+### GitHub Actions Workflow
+
+1. **Lint & Test** - ESLint, TypeScript checks, unit tests
+2. **Build** - Compile TypeScript, build frontend
+3. **Deploy** - Frontend → Vercel (API), Backend → Render (automatic)
 
 ---
 
