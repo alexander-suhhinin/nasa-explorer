@@ -304,43 +304,43 @@ Goal: bring the project to production-ready level with emphasis on reliability, 
 - [x] Add `.dockerignore` check to reduce image size
 
 ### 2. CI/CD Pipeline
-- [x] Настроить GitHub Actions:
+- [x] Configure GitHub Actions:
   - [x] Lint + Test → Build → Deploy
-  - [x] Автодеплой фронтенда на Vercel
-  - [x] Автодеплой бэкенда на Render/Fly.io
-- [x] Добавить статус-бейджи CI в README.md
-- [x] Настроить уведомления о сбоях (GitHub, Slack/Email)
+  - [x] Auto-deploy frontend to Vercel
+  - [x] Auto-deploy backend to Render/Fly.io
+- [x] Add CI status badges to README.md
+- [x] Configure failure notifications (GitHub, Slack/Email)
 
 ### 3. Monitoring & Logging
-- [ ] Добавить логирование запросов на бэкенде (morgan или pino)
-- [ ] Настроить централизованный сбор логов (опционально Loki/ELK)
-- [ ] Проверить работу Healthcheck эндпоинтов для CI/CD и Docker
+- [ ] Add request logging on the backend (morgan or pino)
+- [ ] Configure centralized log collection (optionally Loki/ELK)
+- [ ] Check Healthcheck endpoints for CI/CD and Docker
 
 ### 4. Security & Best Practices
-- [ ] Проверить проект через `npm audit` и обновить уязвимые пакеты
-- [ ] Настроить заголовки безопасности через Helmet на бэкенде
-- [ ] Настроить HTTPS/SSL (Nginx + Let's Encrypt)
-- [ ] Проверить CORS и ограничения доступа к API
+- [ ] Check the project with `npm audit` and update vulnerable packages
+- [ ] Configure security headers through Helmet on the backend
+- [ ] Set up HTTPS/SSL (Nginx + Let's Encrypt)
+- [ ] Check CORS and API access restrictions
 
 ### 5. Documentation & Final Polish
-- [ ] Обновить README.md с финальными инструкциями деплоя
-- [ ] Обновить ARCHITECTURE.md с описанием продакшн-инфраструктуры
-- [ ] Добавить диаграмму CI/CD пайплайна
-- [ ] Зафиксировать инструкции по обновлению проекта и откату версий
+- [ ] Update README.md with final deployment instructions
+- [ ] Update ARCHITECTURE.md with production infrastructure description
+- [ ] Add CI/CD pipeline diagram
+- [ ] Document instructions for project updates and version rollbacks
 
-После выполнения этого чеклиста проект будет полностью готов к использованию в продакшне и продемонстрирует высокий уровень инженерной зрелости.
+After completing this checklist, the project will be fully ready for production use and will demonstrate a high level of engineering maturity.
 
 ⸻
 
 ## Polish & Handover Checklist (Phase 5)
 
-Цель: завершить проект, подготовить его к передаче, демонстрации или ревью.
+Goal: complete the project, prepare it for handover, demonstration or review.
 
 ### 1. Final QA & Review
-- [ ] Прогнать все юнит- и e2e-тесты
-- [ ] Протестировать приложение на разных устройствах и браузерах
-- [ ] Проверить responsive design на мобильных и планшетах
-- [ ] Финальный код-ревью и чистка репозитория (удаление ненужных файлов)
+- [ ] Run all unit and e2e tests
+- [ ] Test the application on different devices and browsers
+- [ ] Check responsive design on mobile and tablets
+- [ ] Final code review and repository cleanup (remove unnecessary files)
 
 ### 2. Documentation
 - [ ] Обновить README.md с финальными скриншотами и GIF/видео демо
