@@ -3,7 +3,7 @@
 **Fullstack web application to explore NASA Open APIs**
 React + Node.js + Express + Docker + CI/CD + 3D Visualization
 
-[![CI/CD](https://img.shields.io/badge/CI%2FCD-passing-green?style=flat-square&logo=github-actions)](https://github.com/your-username/nasa-explorer/actions)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-passing-green?style=flat-squarehttps://img.shields.io/badge/CI%2FCD-passing-green?style=flat-square&logo=github-actions)](https://github.com/your-username/nasa-explorer/actions)logo=github-actions
 [![Tests](https://img.shields.io/badge/Tests-passing-green?style=flat-square&logo=jest)](https://github.com/your-username/nasa-explorer/actions)
 [![Security](https://img.shields.io/badge/Security-scanned-green?style=flat-square&logo=shield)](https://github.com/your-username/nasa-explorer/security)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
